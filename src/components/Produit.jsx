@@ -1,6 +1,6 @@
 import Carte from './Carte.jsx'
 
-function Produit({ produit }) {
+function Produit({ produit, onAddToCart }) {
   return (
     <Carte>
       <a
@@ -31,6 +31,13 @@ function Produit({ produit }) {
         </div>
         <span className="product-card__price">{produit.prix}</span>
       </div>
+      <button
+        className="button button--dark product-card__add"
+        onClick={() => onAddToCart(produit)}
+        type="button"
+      >
+        Ajouter au panier
+      </button> 
     </Carte>
   )
 }

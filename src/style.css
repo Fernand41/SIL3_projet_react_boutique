@@ -440,6 +440,38 @@ img {
   font-weight: 600;
 }
 
+.product-card__add {
+  width: 100%;
+  justify-content: center;
+  margin-top: 16px;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cart {
+  border-top: 1px solid rgba(23, 29, 46, 0.12);
+}
+
+.cart__empty {
+  color: var(--muted);
+}
+
+.cart__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cart__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(23, 29, 46, 0.12);
+  font-size: 13px;
+}
+
 .promise {
   padding: 68px 24px 72px;
   background: #f0ebe2;

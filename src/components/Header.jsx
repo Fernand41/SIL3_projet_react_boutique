@@ -1,4 +1,4 @@
-function Header() {
+function Header({ nombreArticles }) {
   return (
     <>
       <div className="announcement">
@@ -17,13 +17,19 @@ function Header() {
           <a href="#collection">La collection</a>
           <a href="#histoire">Notre histoire</a>
         </nav>
-        <a className="cart-link" href="#collection" aria-label="Voir les produits">
+        <a
+          className="cart-link"
+          href="#panier"
+          aria-label={`Voir le panier, ${nombreArticles} article${nombreArticles > 1 ? 's' : ''}`}
+        >
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 8h16l-1.3 12H5.3L4 8Z" />
             <path d="M9 9V6a3 3 0 0 1 6 0v3" />
           </svg>
           <span>Panier</span>
-          <span className="cart-link__count">0</span>
+          <span className="cart-link__count" aria-live="polite">
+            {nombreArticles}
+          </span>
         </a>
       </header>
     </>

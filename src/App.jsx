@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import Header from './components/Header.jsx'
 import Produit from './components/Produit.jsx'
 import Footer from './components/Footer.jsx'
 
 const produits = [
   {
+    id: 1,
     nom: 'Sac Alma',
     categorie: 'Maroquinerie',
     description: 'Cuir souple, lignes intemporelles.',
@@ -14,6 +16,7 @@ const produits = [
     etiquette: 'Bestseller',
   },
   {
+    id: 2,
     nom: 'Sandales Sol',
     categorie: 'Chaussures',
     description: 'Légères et prêtes pour les beaux jours.',
@@ -24,6 +27,7 @@ const produits = [
     etiquette: 'Nouveau',
   },
   {
+    id: 3,
     nom: 'Pochette N°4',
     categorie: 'Petite maroquinerie',
     description: 'Le petit essentiel du quotidien.',
@@ -36,9 +40,34 @@ const produits = [
 ]
 
 function App() {
+  const [panier, setPanier] = useState([])
+
+  const ajouterAuPanier = (produitAjoute) => {
+    setPanier((panierActuel) => {
+      const produitExistant = panierActuel.find(
+        (produit) => produit.id === produitAjoute.id,
+      )
+
+      if (produitExistant) {
+        return panierActuel.map((produit) =>
+          produit.id === produitAjoute.id
+            ? { ...produit, quantite: produit.quantite + 1 }
+            : produit,
+        )
+      }
+
+      return [...panierActuel, { ...produitAjoute, quantite: 1 }]
+    })
+  }
+
+  const nombreArticles = panier.reduce(
+    (total, produit) => total + produit.quantite,
+    0,
+  )
+
   return (
     <>
-      <Header />
+      <Header nombreArticles={nombreArticles} />
       <main>
         <section className="hero" id="accueil">
           <div className="hero__copy">
@@ -88,9 +117,37 @@ function App() {
           </div>
           <div className="product-grid">
             {produits.map((produit) => (
-              <Produit key={produit.nom} produit={produit} />
+              <Produit
+                key={produit.id}
+                produit={produit}
+                onAddToCart={ajouterAuPanier}
+              />
             ))}
           </div>
+        </section>
+
+        <section className="cart section-shell" id="panier">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Votre sélection</p>
+              <h2>Votre panier</h2>
+            </div>
+            <span>
+              {nombreArticles} article{nombreArticles > 1 ? 's' : ''}
+            </span>
+          </div>
+          {panier.length === 0 ? (
+            <p className="cart__empty">Votre panier est encore vide.</p>
+          ) : (
+            <ul className="cart__list">
+              {panier.map((produit) => (
+                <li className="cart__item" key={produit.id}>
+                  <span>{produit.nom}</span>
+                  <span>Quantité : {produit.quantite}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
 
         <section className="promise" id="histoire">
